@@ -10,6 +10,8 @@ class Matrix{
 		
 	public:
 		Matrix();
+		void edit();	
+		void printMatrix();	
 		~Matrix();
 
 
