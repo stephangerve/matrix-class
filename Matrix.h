@@ -5,14 +5,31 @@
 
 class Matrix{
 	private:
-		int m, n;
-		double *arrayPtr;
+		int rows, columns;
+		double **arrayPtr;
 		
 	public:
-		Matrix();
-		void edit();	
-		void printMatrix();	
+		Matrix();	
+		Matrix(int, int);
 		~Matrix();
+		void edit();
+		void operator=(const Matrix*);
+		Matrix* operator+(const Matrix*);
+		Matrix* operator-(const Matrix*);
+		Matrix* operator*(const Matrix*);
+		Matrix* operator*(double);
+		Matrix* operator/(double);
+		void insertRow(std::string);
+		Matrix* inverse();
+		bool isSquare();
+		double determinant();
+		double trace();
+		void transpose();
+		Matrix* RREF();		
+		void printMatrix();
+		
 
 
-}
+};
+
+#endif
