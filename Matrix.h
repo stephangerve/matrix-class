@@ -19,9 +19,13 @@ class Matrix{
 		Matrix* operator*(const Matrix*);
 		Matrix* operator*(double);
 		Matrix* operator/(double);
+		double operator()(int, int);
+		int numRows();
+		int numColumns();
 		void insertRow(std::string);
 		Matrix* inverse();
 		bool isSquare();
+		bool isEmpty();
 		double determinant();
 		double trace();
 		void transpose();

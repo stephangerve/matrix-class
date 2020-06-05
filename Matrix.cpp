@@ -1,6 +1,7 @@
 #include "Matrix.h"
 #include <iostream>
 #include <sstream>
+#include <string.h>
 
 Matrix::Matrix(){
 	rows = 0;
@@ -22,7 +23,10 @@ Matrix::Matrix(){
 Matrix::Matrix(int rows, int columns){
 	this->rows = rows;
 	this->columns = columns;
-	arrayPtr = NULL;
+	arrayPtr = (double**)malloc(rows*sizeof(double));
+	for(int i = 0; i < rows; i++){
+		arrayPtr[i] = (double*)malloc(columns*sizeof(double));
+	}
 }
 
 Matrix::~Matrix(){
@@ -75,6 +79,18 @@ Matrix* Matrix::operator/(double scalar){
 
 }
 
+double Matrix::operator()(int m, int n){
+	return arrayPtr[m][n];
+}
+
+int Matrix::numRows(){
+	return rows;
+}
+
+int Matrix::numColumns(){
+	return columns;
+}
+
 void Matrix::insertRow(std::string rowStr){
 	std::stringstream parser, converter;
 	std::string entryStr;
@@ -119,11 +135,31 @@ Matrix* Matrix::inverse(){
 }
 
 bool Matrix::isSquare(){
+	if(rows == columns){
+		return true;
+	}
+	else{
+		return false;
+	}
+}
 
+bool Matrix::isEmpty(){
+	if(rows == 0 || columns == 0){
+		return true;
+	}
+	else{
+		return false;
+	}
 }
 
 double Matrix::determinant(){
+	if(this->isSquare() == false){
+		std::cout << "Error: Determinants doesn't exists for non-square matrices." << std::endl;
+		return -1;
+	}
+	else{
 
+	}
 }
 
 double Matrix::trace(){
@@ -131,7 +167,20 @@ double Matrix::trace(){
 }
 
 void Matrix::transpose(){
-
+	double temp = rows;
+	rows = columns;
+	columns = temp;
+	double** arrayPtrT = (double**)malloc(rows*sizeof(double));
+	for(int i = 0; i < this->rows; i++){
+		arrayPtrT[i] = (double*)malloc(columns*sizeof(double));
+		for(int j = 0; j < this->columns; j++){
+			arrayPtrT[i][j] = this->arrayPtr[j][i];
+		}
+	}
+	for(int i = 0; i < temp; i++){
+		free(this->arrayPtr[i]);
+	}	
+	this->arrayPtr = arrayPtrT;
 }
 
 Matrix* Matrix::RREF(){
