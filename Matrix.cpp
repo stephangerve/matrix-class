@@ -9,7 +9,7 @@ Matrix::Matrix(){
 	arrayPtr = NULL;
 	int i = 0;
 	std::string rowStr;
-	std::cout << "Enter row " << i << ": ";
+	/*std::cout << "Enter row " << i << ": ";
 	while(getline(std::cin, rowStr)){
 		if(rowStr == ""){
 			break;
@@ -17,7 +17,10 @@ Matrix::Matrix(){
 		insertRow(rowStr);
 		i++;
 		std::cout << "Enter row " << i << ": ";
-	}	
+	}*/
+	insertRow("25,5,1");
+	insertRow("64,8,1");
+	insertRow("144,12,1");	
 }
 
 Matrix::Matrix(int rows, int columns){
@@ -183,8 +186,27 @@ void Matrix::transpose(){
 	this->arrayPtr = arrayPtrT;
 }
 
-Matrix* Matrix::RREF(){
-
+void Matrix::RREF(){
+	int n = columns;
+	double xmult = 0.0;
+	/*for(int i = 1; i <= n - 1; i++){
+		arrayPtr[i][0] = arrayPtr[i][0] - arrayPtr[0][0]*arrayPtr[i][0]/arrayPtr[0][0];
+	}*/
+	for(int k = 0; k <= n - 1; k++){
+		for(int i = k + 1; i < n; i++){
+			std::cout << "k = " << k << std::endl;
+			std::cout << "i = " << i << std::endl;
+			xmult = arrayPtr[i][k]/arrayPtr[k][k];
+			arrayPtr[i][k] = xmult;
+			printMatrix();
+			for(int j = k + 1; j < n; j++){
+				std::cout << "j = " << j << std::endl;
+				arrayPtr[i][j] = arrayPtr[i][j] - (arrayPtr[i][k]/arrayPtr[k][k]) * arrayPtr[k][j];
+				printMatrix();
+				std::cout << std::endl;
+			}
+		}
+	}
 }
 
 void Matrix::printMatrix(){

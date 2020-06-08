@@ -29,7 +29,7 @@ class Matrix{
 		double determinant();
 		double trace();
 		void transpose();
-		Matrix* RREF();		
+		void RREF();		
 		void printMatrix();
 		
 
