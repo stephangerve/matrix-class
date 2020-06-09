@@ -9,7 +9,7 @@ Matrix::Matrix(){
 	arrayPtr = NULL;
 	int i = 0;
 	std::string rowStr;
-	/*std::cout << "Enter row " << i << ": ";
+	std::cout << "Enter row " << i << ": ";
 	while(getline(std::cin, rowStr)){
 		if(rowStr == ""){
 			break;
@@ -17,10 +17,10 @@ Matrix::Matrix(){
 		insertRow(rowStr);
 		i++;
 		std::cout << "Enter row " << i << ": ";
-	}*/
-	insertRow("25,5,1");
+	}
+	/*insertRow("25,5,1");
 	insertRow("64,8,1");
-	insertRow("144,12,1");	
+	insertRow("144,12,1");	*/
 }
 
 Matrix::Matrix(int rows, int columns){
@@ -83,7 +83,13 @@ Matrix* Matrix::operator/(double scalar){
 }
 
 double Matrix::operator()(int m, int n){
-	return arrayPtr[m][n];
+	if(m <= 0 || n <= 0){
+		std::cout << "Error: Invalid index." << std::endl;
+		return -1;
+	}
+	else{
+		return arrayPtr[m - 1][n - 1];
+	}
 }
 
 int Matrix::numRows(){
@@ -186,29 +192,34 @@ void Matrix::transpose(){
 	this->arrayPtr = arrayPtrT;
 }
 
-void Matrix::RREF(){
+/*void Matrix::RREF(){
 	int n = columns;
 	double xmult = 0.0;
-	/*for(int i = 1; i <= n - 1; i++){
-		arrayPtr[i][0] = arrayPtr[i][0] - arrayPtr[0][0]*arrayPtr[i][0]/arrayPtr[0][0];
-	}*/
-	for(int k = 0; k <= n - 1; k++){
-		for(int i = k + 1; i < n; i++){
-			std::cout << "k = " << k << std::endl;
-			std::cout << "i = " << i << std::endl;
-			xmult = arrayPtr[i][k]/arrayPtr[k][k];
-			arrayPtr[i][k] = xmult;
-			printMatrix();
-			for(int j = k + 1; j < n; j++){
-				std::cout << "j = " << j << std::endl;
-				arrayPtr[i][j] = arrayPtr[i][j] - (arrayPtr[i][k]/arrayPtr[k][k]) * arrayPtr[k][j];
-				printMatrix();
-				std::cout << std::endl;
+	for(int k = 1; k <= n - 1; k++){
+		for(int i = k + 1; i <= n; i++){
+			//std::cout << "k = " << k << std::endl;
+			//std::cout << "i = " << i << std::endl;
+			//xmult = arrayPtr[i][k]/arrayPtr[k][k];
+			//arrayPtr[i][k] = xmult;
+			//printMatrix();
+			for(int j = k; j <= n; j++){
+				//std::cout << "j = " << j << std::endl;
+				double entry = operator()(i,j) - (operator()(i,k)/operator()(k,k)) * operator()(k,j);
+				set(i,j,entry);
+				//std::cout << std::endl;
 			}
 		}
 	}
 }
-
+*/
+void Matrix::set(int m, int n, double entry){
+	if(m <= 0 || n <= 0){
+		std::cout << "Error: Invalid index." << std::endl;
+	}
+	else{
+		arrayPtr[m - 1][n - 1] = entry;
+	}
+}
 void Matrix::printMatrix(){
 	for(int i = 0; i < rows; i++){
 		for(int j = 0; j < columns; j++){

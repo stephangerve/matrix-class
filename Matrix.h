@@ -29,8 +29,8 @@ class Matrix{
 		double determinant();
 		double trace();
 		void transpose();
-		void RREF();		
 		void printMatrix();
+		void set(int, int, double);
 		
 
 
